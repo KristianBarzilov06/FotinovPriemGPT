@@ -12,7 +12,12 @@ textLoader = TextLoader(
     file_path="message.txt",
 )
 
+pravilnikTextLoader = TextLoader(
+    file_path="PDU_23-24 актуал.txt"
+)
+
 pdfPages = pdfLoader.load_and_split()
+# pdfPages = pravilnikTextLoader.load_and_split()
 textPages = textLoader.load_and_split()
 
 # print(pages[1].page_content)
