@@ -1,8 +1,8 @@
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from pprint import pprint
 
-from chat import ask_question
-import embedder
+from backend.chat import ask_question
+import backend.embedder as embedder
 
 pdfLoader = PyPDFLoader(
     file_path="PDU_23-24 актуал.pdf"

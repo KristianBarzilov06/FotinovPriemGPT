@@ -11,7 +11,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # Import variables from the 'embedder' module which contains settings for our program.
-from embedder import CHROMA_DIR, COLLECTION_NAME
+from backend.embedder import CHROMA_DIR, COLLECTION_NAME
 
 conversational_chain = None
 store = {}
@@ -100,7 +100,7 @@ def ask_question(question: str):
             "configurable": {"session_id": 0}
         }
     )["answer"]
-    print(response)
+    return response
 
 
 # Define a function to format the context information retrieved by the vector store.
