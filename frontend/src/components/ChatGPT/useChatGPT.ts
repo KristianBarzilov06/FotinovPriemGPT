@@ -3,7 +3,7 @@ import { useEffect, useReducer, useRef, useState } from 'react'
 import ClipboardJS from 'clipboard'
 import { throttle } from 'lodash-es'
 
-import { ChatGPTProps, ChatMessage, ChatRole } from './interface'
+import { type ChatGPTProps, type ChatMessage, ChatRole } from './interface'
 
 const scrollDown = throttle(
   () => {
