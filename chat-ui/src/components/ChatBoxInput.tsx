@@ -50,7 +50,7 @@ export default function ChatBoxInput() {
 				className="absolute bottom-4 w-full mx-auto flex justify-center items-center max-w-lg"
 			>
 				<Input
-					className="w-[100%] mx-auto h-10 text-xl z-20 bg-background "
+					className="w-[100%] mx-auto h-10 text-xl z-50 !bg-background !border-primary "
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					multiple

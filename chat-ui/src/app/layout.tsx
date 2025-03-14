@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { MotionConfig } from "motion/react";
+import Header from "@/components/Header";
 
 const montserrat = Montserrat({
 	variable: "--font-monsterrat",
@@ -24,7 +25,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className=" ">
+		<html lang="en" className="">
 			<MotionConfig
 				transition={{
 					type: "spring",
@@ -33,7 +34,10 @@ export default function RootLayout({
 					stiffness: 100,
 				}}
 			>
-				<body className={`${montserrat.variable} antialiased`}>{children}</body>
+				<body className={`${montserrat.variable} antialiased`}>
+					<Header />
+					{children}
+				</body>
 			</MotionConfig>
 		</html>
 	);

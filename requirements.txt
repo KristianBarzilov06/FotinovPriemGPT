@@ -1,0 +1,19 @@
+# Web server
+flask>=2.0.0
+# or fastapi>=0.95.0
+# uvicorn>=0.22.0  # If using FastAPI
+
+# AI/NLP libraries
+transformers>=4.28.0
+sentence-transformers>=2.2.2
+torch>=2.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.28.0
+numpy>=1.22.0
+pandas>=2.0.0
+
+# PDF processing (for PDU_23-24 актуал.pdf)
+PyPDF2>=3.0.0
+# or pdfplumber>=0.7.0

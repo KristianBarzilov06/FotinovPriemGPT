@@ -7,13 +7,13 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 export default function Home() {
-	const { messages, setFetchPath } = useChatStore();
+	const { messages, setFetchPath, loading } = useChatStore();
 	useEffect(() => {
-		if (setFetchPath) setFetchPath("/api");
+		if (setFetchPath) setFetchPath("http://localhost:8000/ask");
 	}, [setFetchPath]);
 
 	return (
-		<div className="max-w-2xl h-screen max-h-screen mx-auto flex flex-col  items-center w-full  relative">
+		<div className="h-screen max-h-screen mx-auto flex flex-col  items-center w-full  relative">
 			{messages.length <= 0 && (
 				<motion.div
 					initial={{
@@ -34,7 +34,7 @@ export default function Home() {
 			)}
 
 			{messages.length >= 1 && (
-				<ScrollArea className="flex flex-col !gap-4 max-w-5xl w-full h-full">
+				<ScrollArea className="flex flex-col !gap-4 max-w-7xl w-full h-full">
 					<ScrollBar />
 					{messages.map((msg, idx) => (
 						<motion.div
@@ -50,15 +50,20 @@ export default function Home() {
 							}}
 							layout
 							key={idx}
-							className={`p-4 rounded-2xl max-w-sm  my-6 ${
+							className={`p-4 rounded-2xl max-w-sm my-6 w-fit ${
 								msg.role === "user"
-									? "bg-primary text-primary-foreground self-end"
-									: "bg-secondary text-secondary-foreground self-start"
+									? "bg-primary text-primary-foreground ml-auto"
+									: "bg-secondary text-secondary-foreground mr-auto"
 							}`}
 						>
 							<h1 className="text-lg">{msg.content}</h1>
 						</motion.div>
 					))}
+					{loading && (
+						<div className="animate-pulse bg-primary h-10 w-10 rounded-full self-center"></div>
+					)}
+
+					<div className="h-16" />
 				</ScrollArea>
 			)}
 			<ChatBoxInput />
