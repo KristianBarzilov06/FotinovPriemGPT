@@ -9,7 +9,7 @@ pdfLoader = PyPDFLoader(
 )
 
 textLoader = TextLoader(
-    file_path="message.txt",
+    file_path="message.txt", encoding='UTF-8'
 )
 
 pravilnikTextLoader = TextLoader(
