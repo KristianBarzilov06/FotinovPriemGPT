@@ -5,8 +5,6 @@ import { Input } from "./ui/input";
 import { motion, type Variants } from "motion/react";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
-import type { KeyboardEventHandler } from "react";
-import { useChatGPT } from "@/hooks/useChatGPT";
 import { ChatRole } from "@/models/interfaces";
 import { useChatStore } from "@/stores/chatStore";
 
@@ -18,7 +16,7 @@ export default function ChatBoxInput() {
 			opacity: 0,
 			filter: "blur(10px)",
 			scale: 0.7,
-			x: 25,
+			x: 0,
 			width: 0,
 			zIndex: -1,
 		},
@@ -26,14 +24,15 @@ export default function ChatBoxInput() {
 			opacity: 1,
 			filter: "blur(0px)",
 			scale: 1,
-			x: 0,
+			x: 60,
 			zIndex: -1,
 			width: "auto",
 		},
 	};
 
 	const sendMessage = async () => {
-		console.log(input);
+		if (input.trim().length === 0) return;
+
 		onSend({
 			content: input,
 			role: ChatRole.User,
@@ -43,34 +42,49 @@ export default function ChatBoxInput() {
 	};
 
 	return (
-		<>
+		<motion.div
+			initial={{
+				y: 150,
+				opacity: 0.7,
+				scale: 0.8,
+				filter: "blur(10px)",
+			}}
+			animate={{
+				y: 0,
+				opacity: 1,
+				scale: 1,
+				filter: "blur(0px)",
+			}}
+			transition={{
+				delay: 0.8,
+				type: "spring",
+				mass: 0.5,
+				damping: 10,
+				stiffness: 100,
+			}}
+			className="w-full relative"
+		>
+			<Input
+				className="w-full h-12 text-lg bg-background border-primary/20 px-6"
+				value={input}
+				onChange={(e) => setInput(e.target.value)}
+				placeholder="Попитай всичко..."
+				onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						sendMessage();
+					}
+				}}
+			/>
 			<motion.div
-				initial={{ opacity: 0, scale: 0.2, y: 150, filter: "blur(10px)" }}
-				animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-				className="absolute bottom-4 w-full mx-auto flex justify-center items-center max-w-lg"
+				variants={variants}
+				className="absolute right-3 top-1/2 -translate-y-1/2"
+				initial="hidden"
+				animate={input.length >= 1 ? "visible" : "hidden"}
 			>
-				<Input
-					className="w-[100%] mx-auto h-10 text-xl z-50 !bg-background !border-primary "
-					value={input}
-					onChange={(e) => setInput(e.target.value)}
-					multiple
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-							sendMessage();
-						}
-					}}
-				/>
-				<motion.div
-					variants={variants}
-					className="flex items-center z-10"
-					initial="hidden"
-					animate={input.length >= 1 ? "visible" : "hidden"}
-				>
-					<Button size={"icon"} className="ml-2" onClick={sendMessage}>
-						<Send />
-					</Button>
-				</motion.div>
+				<Button size={"icon"} className="" onClick={sendMessage}>
+					<Send size={18} />
+				</Button>
 			</motion.div>
-		</>
+		</motion.div>
 	);
 }

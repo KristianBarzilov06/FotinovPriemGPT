@@ -34,8 +34,7 @@ export default function RootLayout({
 					stiffness: 100,
 				}}
 			>
-				<body className={`${montserrat.variable} antialiased`}>
-					<Header />
+				<body className={`${montserrat.variable} antialiased `}>
 					{children}
 				</body>
 			</MotionConfig>
