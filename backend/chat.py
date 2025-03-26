@@ -9,6 +9,7 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_community.callbacks.manager import get_openai_callback
 
 # Import variables from the 'embedder' module which contains settings for our program.
 from backend.embedder import CHROMA_DIR, COLLECTION_NAME
@@ -52,7 +53,8 @@ def initialize():
     # Initialize the LLM we will chat with, setting its parameters.
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",
-        temperature=0.25
+        temperature=0.25,
+        stream_usage=True
     )
 
     # Prepare the conversation prompt using the template and the user's question.
@@ -94,12 +96,18 @@ def ask_question(question: str):
         initialize()
     
     print("Waiting for response..")
-    response = conversational_chain.invoke(
-        {"input": question},
-        config={
-            "configurable": {"session_id": 0}
-        }
-    )["answer"]
+
+    response = "No response."
+    with get_openai_callback() as cb:
+        response = conversational_chain.invoke(
+            {"input": question},
+            config={
+                "configurable": {"session_id": 0}
+            }
+        )["answer"]
+        print("Request info: ", cb)
+        print("-------")
+
     return response
 
 
