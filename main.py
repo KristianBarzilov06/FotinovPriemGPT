@@ -13,7 +13,11 @@ loader_priem = TextLoader(
     file_path="message.txt", encoding='UTF-8'
 )
 
-loader_all = MergedDataLoader(loaders=[loader_pravilnik, loader_priem])
+loader_projects = TextLoader(
+    file_path="projects.txt", encoding='UTF-8'
+)
+
+loader_all = MergedDataLoader(loaders=[loader_pravilnik, loader_priem, loader_projects])
 
 docs_all = loader_all.load_and_split()
 

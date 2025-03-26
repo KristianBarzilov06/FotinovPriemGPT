@@ -16,6 +16,8 @@ from backend.embedder import CHROMA_DIR, COLLECTION_NAME
 
 conversational_chain = None
 store = {}
+used_tokens = 0
+ModelMaxTokens = 16385
 
 def initialize():
     print("Initializing..")
@@ -97,7 +99,12 @@ def ask_question(question: str):
     
     print("Waiting for response..")
 
+    global used_tokens
     response = "No response."
+
+    if used_tokens >= ModelMaxTokens:
+        store = {}
+
     with get_openai_callback() as cb:
         response = conversational_chain.invoke(
             {"input": question},
@@ -107,6 +114,7 @@ def ask_question(question: str):
         )["answer"]
         print("Request info: ", cb)
         print("-------")
+        used_tokens = cb.total_tokens
 
     return response
 
