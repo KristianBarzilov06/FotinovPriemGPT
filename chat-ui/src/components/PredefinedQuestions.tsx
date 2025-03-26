@@ -56,7 +56,7 @@ export default function PredefinedQuestions({
 	};
 
 	return (
-		<div className="flex flex-wrap gap-4 justify-center w-full">
+		<div className="flex flex-wrap gap-2 sm:gap-4 justify-center w-full px-2 sm:px-4">
 			{questions.map((question, index) => (
 				<Question
 					key={`question-${question}`}

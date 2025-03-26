@@ -93,7 +93,7 @@ export default function InfoBoxes() {
 	];
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto mt-6">
+		<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full max-w-2xl mx-auto mt-4 sm:mt-6 px-2 sm:px-4">
 			{infoBoxes.map((box, index) => (
 				<Link key={box.link} href={box.link} prefetch target="_blank">
 					<InfoBox

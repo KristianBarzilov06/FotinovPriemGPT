@@ -18,14 +18,14 @@ export default function ChatBoxInput() {
 			scale: 0.7,
 			x: 0,
 			width: 0,
-			zIndex: -1,
+			zIndex: 0,
 		},
 		visible: {
 			opacity: 1,
 			filter: "blur(0px)",
 			scale: 1,
-			x: 60,
-			zIndex: -1,
+			x: 0,
+			zIndex: 10,
 			width: "auto",
 		},
 	};
@@ -65,7 +65,7 @@ export default function ChatBoxInput() {
 			className="w-full relative"
 		>
 			<Input
-				className="w-full h-12 text-lg bg-background border-primary/20 px-6"
+				className="w-full h-10 sm:h-12 text-base sm:text-lg bg-background border-primary/20 px-4 sm:px-6 pr-12"
 				value={input}
 				onChange={(e) => setInput(e.target.value)}
 				placeholder="Попитай всичко..."
@@ -77,12 +77,16 @@ export default function ChatBoxInput() {
 			/>
 			<motion.div
 				variants={variants}
-				className="absolute right-3 top-1/2 -translate-y-1/2"
+				className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10"
 				initial="hidden"
 				animate={input.length >= 1 ? "visible" : "hidden"}
 			>
-				<Button size={"icon"} className="" onClick={sendMessage}>
-					<Send size={18} />
+				<Button
+					size={"icon"}
+					className="size-8 sm:size-9"
+					onClick={sendMessage}
+				>
+					<Send size={16} className="sm:size-5" />
 				</Button>
 			</motion.div>
 		</motion.div>
