@@ -1,3 +1,4 @@
+import os
 from langchain_chroma import Chroma
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import MessagesPlaceholder, ChatPromptTemplate
@@ -42,7 +43,7 @@ def initialize():
 
     # Set up a 'vector store' to find related information.
     vector_store = Chroma(
-        embedding_function=OpenAIEmbeddings(model="text-embedding-3-large"),
+        embedding_function=OpenAIEmbeddings(model=os.environ.get('OPENAI_EMBEDDER')),
         persist_directory=CHROMA_DIR,
         collection_name=COLLECTION_NAME
     )
@@ -54,9 +55,9 @@ def initialize():
 
     # Initialize the LLM we will chat with, setting its parameters.
     llm = ChatOpenAI(
-        model_name="gpt-3.5-turbo",
+        model_name=os.environ.get('OPENAI_MODEL'),
         temperature=0.25,
-        stream_usage=True
+        stream_usage=False
     )
 
     # Prepare the conversation prompt using the template and the user's question.

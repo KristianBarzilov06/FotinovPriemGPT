@@ -1,15 +1,10 @@
 "use client";
 import { motion } from "motion/react";
 import { Card, CardContent } from "./ui/card";
-import { useChatStore } from "@/stores/chatStore";
-import { ChatRole } from "@/models/interfaces";
 import {
 	Newspaper,
 	BookOpen,
 	GraduationCap,
-	Calendar,
-	Bell,
-	School,
 	ClipboardList,
 } from "lucide-react";
 import Link from "next/link";
@@ -59,8 +54,6 @@ const InfoBox = ({
 };
 
 export default function InfoBoxes() {
-	const { onSend } = useChatStore();
-
 	const infoBoxes = [
 		{
 			id: "news",

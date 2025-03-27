@@ -177,7 +177,7 @@ export const useChatGPT = (props: ChatGPTProps) => {
 	useEffect(() => {
 		store.setupClipboard();
 		store.setFetchPath(fetchPath);
-	}, [fetchPath, store.setFetchPath, store.setupClipboard]);
+	}, [fetchPath, store]);
 
 	return {
 		loading: store.loading,

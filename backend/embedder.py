@@ -23,7 +23,7 @@ def embed_stuff(data):
             api_key=os.environ.get('OPENAI_API_KEY'),
             # The text embedding model is designed to convert text into numerical vectors, known as embeddings.
             # These embeddings capture the semantic meaning of the text in a way that can be processed.
-            model_name="text-embedding-3-large"
+            model_name=os.environ.get('OPENAI_EMBEDDER')
         )
     )
 
@@ -53,7 +53,7 @@ def search_embed(question):
         name=COLLECTION_NAME,
         embedding_function=chromadb.utils.embedding_functions.OpenAIEmbeddingFunction(
             api_key=os.environ.get('OPENAI_API_KEY'),
-            model_name="text-embedding-3-large"
+            model_name=os.environ.get('OPENAI_EMBEDDER')
         )
     )
     return collection.query(query_texts=[question], n_results=3)

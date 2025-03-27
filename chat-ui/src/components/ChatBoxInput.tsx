@@ -62,31 +62,51 @@ export default function ChatBoxInput() {
 				damping: 10,
 				stiffness: 100,
 			}}
-			className="w-full relative"
+			className="w-full relative flex gap-2 items-end"
 		>
 			<Input
-				className="w-full h-10 sm:h-12 text-base sm:text-lg bg-background border-primary/20 px-4 sm:px-6 pr-12"
+				className="w-full min-h-[40px] max-h-[200px] text-base sm:text-lg bg-background border-primary/20 px-4 sm:px-6 py-2 resize-none overflow-y-auto"
 				value={input}
-				onChange={(e) => setInput(e.target.value)}
+				onChange={(e) => {
+					setInput(e.target.value);
+					// Trigger scroll after input change
+					setTimeout(() => {
+						const scrollContainer = document.querySelector(
+							"[data-radix-scroll-area-viewport]",
+						);
+						if (scrollContainer) {
+							scrollContainer.scrollTo({
+								top: scrollContainer.scrollHeight,
+								behavior: "smooth",
+							});
+						}
+					}, 0);
+				}}
 				placeholder="Попитай всичко..."
 				onKeyDown={(e) => {
-					if (e.key === "Enter") {
+					if (e.key === "Enter" && !e.shiftKey) {
+						e.preventDefault();
 						sendMessage();
 					}
+				}}
+				style={{
+					height: "auto",
+					minHeight: "40px",
+					maxHeight: "200px",
 				}}
 			/>
 			<motion.div
 				variants={variants}
-				className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-10"
+				className="flex-shrink-0"
 				initial="hidden"
 				animate={input.length >= 1 ? "visible" : "hidden"}
 			>
 				<Button
 					size={"icon"}
-					className="size-8 sm:size-9"
+					className="size-10 sm:size-11"
 					onClick={sendMessage}
 				>
-					<Send size={16} className="sm:size-5" />
+					<Send size={18} className="sm:size-5" />
 				</Button>
 			</motion.div>
 		</motion.div>
